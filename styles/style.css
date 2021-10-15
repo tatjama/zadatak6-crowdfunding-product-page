@@ -1,0 +1,30 @@
+:root{
+    --moderate-cyan: hsl(176, 50%, 47%);
+    --dark-cyan: hsl(176, 72%, 28%);
+    --black: hsl(0, 0%, 0%);
+    --dark-gray: hsl(0, 0%, 48%);
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body, html{
+    font-family: 'Commissioner', sans-serif;
+    font-size: 16px;
+    font-weight: 400 ;
+    color: var(--dark-gray);
+    overflow-x: hidden;
+    position: relative;
+}
+ul{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+    cursor: pointer;
+
+}
+button{
+    cursor: pointer;
+}
