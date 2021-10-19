@@ -6,9 +6,23 @@ const toggleBookmarkBtn = () => {
     bookmarkBtnRight.classList.toggle("active");
     bookmarkBtn.innerHTML = (bookmarkBtn.innerHTML == "Bookmark")? "Bookmarked" : "Bookmark";
     }
-bookmarkBtn.addEventListener("click", toggleBookmarkBtn);
-
+bookmarkBtnRight.addEventListener("click", toggleBookmarkBtn);
 /*End Toggle Bookmark Button */
+
+/**Start Hamburger Menu Button */
+const hamburgerMenuButton = document.querySelector(".nav__menu");
+const navMenu = document.querySelector(".nav");
+const toggleMenu = () => {
+    if(navMenu.style.display == "block"){
+        hamburgerMenuButton.innerHTML = '<img src="./images/icon-hamburger.svg" alt="hamburger menu"/>';
+        navMenu.style.display = "none";
+    }else{
+        hamburgerMenuButton.innerHTML = '<img src="./images/icon-close-menu.svg" alt="close menu"/>';
+        navMenu.style.display = "block";
+    }    
+}
+hamburgerMenuButton.addEventListener("click",toggleMenu);
+/**End Hamburger Menu Button */
 
 /**Start Slider range */
 class Project{
@@ -110,7 +124,7 @@ const displaySelection = (stands, radioId) => {
                             <header class="selection__header">              
                                 <h3 class="selection__title">${stand.title} </h3>
                                 <span class="selection__span">Pledge ${stand.price} or more</span>
-                                <h3>${stand.quantity} <span class="selection__sup"> left</span></h3>
+                                <h3 class="selection__h3">${stand.quantity} <span class="selection__sup"> left</span></h3>
                             </header>
                             <p class="selection__text">${stand.description}</p>   
                         </article>
