@@ -61,11 +61,11 @@
               handcrafted monitor stand to reduce neck and eye strain.</p>
               <div class="main__btns">
                 <button class="btn" >Back this project</button>
-                <div class="main__btns--right">
+                <div class="main__btns--right " >
                   <svg class="main__img" width="56" height="56" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd">
                     <circle fill="#2F2F2F" cx="28" cy="28" r="28"/><path fill="#B1B1B1" d="M23 19v18l5-5.058L33 37V19z"/>
                     </g></svg>
-                  <button class="main__btn--right">Bookmark</button>     
+                  <button class="main__btn--right" >Bookmark</button>     
                 </div>       
               </div>
           </header>
@@ -90,11 +90,6 @@
               <input class="status__slider" type="range" name="status" />      
             </div>      
           </section>
-          <script>
-            const rangeMax = 100000;
-            const range = 89914;
-            document.querySelector("input[type=range]").style.width = range / rangeMax * 100 + "%";
-          </script>
           <!--End Status Section-->
           <!--Start About section-->
           <section class="about">
@@ -112,7 +107,8 @@
                 USB sticks to be stored under the stand.
               </p>
             </article>
-            <section class="about__item">
+            <div class="root"></div>
+            <!--<section class="about__item">
               <header class="about__header">
                 <h3>Bamboo Stand</h3>
                 <span class="about__span">Pledge $25 or more </span>
@@ -151,7 +147,7 @@
                 <h1 class="about__h1">0 <sup class="about__sup">left</sup></h1>
                 <button class="btn">Out of stock</button>
               </footer>
-            </section>
+            </section>-->
           </section>
           <!--End About Section-->
         </main>
@@ -160,6 +156,7 @@
         <!-- Start Selection modal  -->
         <div class="selection__wrapper">
           <main class="selection">
+            <img class="selection__close" src="./images/icon-close-modal.svg" alt="close">
             <article>
               <h2>
                 Back this project
@@ -168,7 +165,8 @@
                 Want to support us in bringing Mastercraft Bamboo Monitor. Riser out in the world? 
               </p>
             </article>
-            <section class="selection__item active">
+            
+            <section class="selection__item selection__radio-0">
               <label class="selection__container">
                 <article class="selection__description">
                   <header class="selection__header">              
@@ -180,10 +178,10 @@
                     As a backer, you will be signed up to receive product updates via email.
                   </p>   
                 </article>
-                  <input type="radio" class="radio-btn" name="pledge" value="no-reword">
+                  <input type="radio" id="radio-0" class="radio-btn" name="pledge" value="radio-0">
                   <span class="radio-mark"></span>           
               </label>
-              <footer class="selection__footer">
+              <footer class="selection__footer radio-0">
                 <p>Enter your pledge</p>
                 <div>
                 <label class="selection__container--footer" for="price">$
@@ -193,7 +191,8 @@
               </div>
               </footer>
             </section>
-            <section class="selection__item ">
+            <div class="selection__root"></div>
+            <!--<section class="selection__item  selection__radio-1">
               <label class="selection__container">
                 <article class="selection__description">
                   <header class="selection__header">              
@@ -206,10 +205,10 @@
                     promotional campaign, and you’ll be added to a special Backer member list.
                     </p>   
                 </article>
-                  <input type="radio" class="radio-btn" name="pledge" value="bamboo-stand"/>
+                  <input type="radio" id="radio-1" class="radio-btn" name="pledge" value="radio-1"/>
                   <span class="radio-mark"></span>           
               </label>
-              <footer class="selection__footer">
+              <footer class="selection__footer radio-1">
                 <p>Enter your pledge</p>
                 <div>
                 <label class="selection__container--footer" for="price">$
@@ -219,7 +218,7 @@
               </div>
               </footer>
             </section>
-            <section class="selection__item ">
+            <section class="selection__item selection__radio-2">
               <label class="selection__container">
                 <article class="selection__description">
                   <header class="selection__header">              
@@ -232,10 +231,10 @@
                     added to our Backer member list. Shipping is included.
                   </p>   
                 </article>
-                  <input type="radio" class="radio-btn" name="pledge" value="black-edition"/>
+                  <input type="radio" id="radio-2" class="radio-btn" name="pledge" value="radio-2"/>
                   <span class="radio-mark"></span>           
               </label>
-              <footer class="selection__footer">
+              <footer class="selection__footer radio-2">
                 <p>Enter your pledge</p>
                 <div>
                 <label class="selection__container--footer" for="price">$
@@ -245,7 +244,7 @@
               </div>
               </footer>
             </section>
-            <section class="selection__item out-stock">
+            <section class="selection__item selection__radio-3 out-stock">
               <label class="selection__container">
                 <article class="selection__description">
                   <header class="selection__header">              
@@ -258,10 +257,10 @@
                     You’ll be added to our Backer member list. Shipping is included.
                   </p>   
                 </article>
-                  <input type="radio" class="radio-btn" name="pledge" value="black-edition"/>
+                  <input type="radio" id="radio-3" disabled="true" class="radio-btn--opac" name="pledge" value="radio-3"/>
                   <span class="radio-mark"></span>           
               </label>
-              <footer class="selection__footer">
+              <footer class="selection__footer radio-3">
                 <p>Enter your pledge</p>
                 <div>
                 <label class="selection__container--footer" for="price">$
@@ -270,7 +269,7 @@
                 <button class=" btn selection__btn">Continue</button>
               </div>
               </footer>
-            </section>
+            </section>-->
             
           </main>
         </div>  
@@ -289,7 +288,7 @@
           </div>
         </section>
         <!--End Success modal-->
-      
+      <script src="./js/index.js"></script>
     </div> 
   </body>
 </html>
