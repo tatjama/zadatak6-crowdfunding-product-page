@@ -324,8 +324,7 @@ input[type=range]::-webkit-slider-thumb {
 /*Start About Section*/
 .about{
     padding: 50px ;
-    margin-bottom: 50px;
-
+    margin-bottom: 50px;    
     background-color: var(--white);
     border-radius: 10px;
     -webkit-border-radius: 10px;

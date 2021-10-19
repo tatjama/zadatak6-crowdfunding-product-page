@@ -11,37 +11,18 @@ bookmarkBtn.addEventListener("click", toggleBookmarkBtn);
 /*End Toggle Bookmark Button */
 
 /**Start Slider range */
-
-const rangeSlider = document.querySelector("input[type=range]");
-const rangeMax = 100000;
-let range = 89914;
-rangeSlider.style.width = range / rangeMax * 100 + "%";
-const root = document.querySelector(".root");
-const selectionRoot = document.querySelector(".selection__root");
-const selectionSection = document.querySelector(".selection__wrapper");
-const successSection = document.querySelector(".success__wrapper");
-const successButton = document.querySelector(".success__btn");
-successButton.addEventListener('click', () => handleClose(successSection) );
-/*const checkButtons = document.querySelectorAll(".radio-btn");
-checkButtons.forEach((el) =>{el.addEventListener('click', handleCheckRadio)});
-const continueButtons = document.querySelectorAll(".selection__btn");
-continueButtons.forEach((el) =>el.addEventListener('click', handleContinue));
-const closeButton = document.querySelector(".selection__close");
-closeButton.addEventListener('click',()=> handleClose(selectionSection));*/
-let checkedStand = "";
-let stands = [];
-
-
 class Project{
-    constructor(backed, backers, days){
-        this.target = 1000.000;
-        this.backed = backed;
+    constructor(amount, backers, days){
+        this.target = 100000;
+        this.amount = amount;
         this.backers = backers;
         this.days = days;
+ //       this.percentage = this.countPercentage();
     }
+   /* countPercentage(){ 
+        return this.amount / this.target * 100 ;
+    }*/
 }
-const backerProject = new Project(89914, 5007, 56);
-
 class Stand{
     constructor(id, title, description, price, quantity){
         this.id = id;
@@ -55,14 +36,43 @@ class Stand{
     }
 }
 
+//Initial Values:
+
+const backerProject = new Project(10000, 1000, 56);
 const bambooStand =  new Stand(1, 'Bamboo Stand', `You get an ergonomic stand made of natural bamboo. You've helped us launch our
 promotional campaign, and you’ll be added to a special Backer member list.`, 25, 101);
 const blackEditionStand = new Stand(2, `Black Edition Stand `, `You get a Black Special Edition computer stand and a personal thank you. You’ll be
 added to our Backer member list. Shipping is included.`, 75, 64);
 const mahoganySpecialEditionStand = new Stand(3, `Mahogany Special Edition`, `You get two Special Edition Mahogany stands, a Backer T-Shirt, and a personal 
-thank you. You’ll be added to our Backer member list. Shipping is included.`, 200, 0 )
+thank you. You’ll be added to our Backer member list. Shipping is included.`, 200, 1 )
 
-stands = [bambooStand, blackEditionStand, mahoganySpecialEditionStand];
+const stands = [bambooStand, blackEditionStand, mahoganySpecialEditionStand];
+
+const displayStatus = (project) => {
+    statusRoot.innerHTML = `
+    <div class="status__statistic">              
+        <div class="status__item">
+            <h1 class="status__h1">${project.amount}</h1>
+            <p>of $100,000 backed</p>
+        </div>
+        <div class="status__item">
+            <h1 class="status__h1">${project.backers}</h1>
+            <p>total backers</p>
+        </div>
+        <div class="status__item">
+            <h1 class="status__h1">${project.days}</h1>
+            <p>days left</p>
+        </div>
+    </div>
+    <div class="status__slider--background">
+        <input class="status__slider"  type="range" name="status" />      
+    </div>
+    `
+    console.log(project.amount / project.target * 100 + "%")
+    //const rangeSlider = document.querySelector("input[type=range]");
+    const rangeSlider = document.querySelector(".status__slider");
+    rangeSlider.style.width = project.amount / project.target * 100 + "%";
+}
 
 const displayStands = (stands) => {    
         root.innerHTML = 
@@ -111,7 +121,7 @@ const displaySelection = (stands, radioId) => {
                         <p>Enter your pledge</p>
                         <div>
                             <label class="selection__container--footer" for="price">$
-                                <input type="number" min=${stand.price} name="price" value=${stand.price} >
+                                <input class="input-${stand.id} " type="number" min=${stand.price} name="price" value=${stand.price} >
                             </label>
                             <button class=" btn selection__btn">Continue</button>
                         </div>
@@ -126,11 +136,21 @@ const displaySelection = (stands, radioId) => {
     const checkButtons = document.querySelectorAll(".radio-btn");
     checkButtons.forEach((el) =>{el.addEventListener('click', handleCheckRadio)});
     const continueButtons = document.querySelectorAll(".selection__btn");
-    continueButtons.forEach((el) =>el.addEventListener('click', handleContinue));
+    continueButtons.forEach((el) =>el.addEventListener('click', handleContinuePledge));
     const closeButton = document.querySelector(".selection__close");
     closeButton.addEventListener('click',()=> handleClose(selectionSection));
 
 }
+
+const root = document.querySelector(".root");
+const selectionRoot = document.querySelector(".selection__root");
+const statusRoot = document.querySelector(".status");
+const selectionSection = document.querySelector(".selection__wrapper");
+const successSection = document.querySelector(".success__wrapper");
+const successButton = document.querySelector(".success__btn");
+successButton.addEventListener('click', () => handleClose(successSection) );
+let checkedStand = "";
+
 function handleSelectReward(){
     let radioId;
     switch(this.id){
@@ -146,32 +166,37 @@ function handleSelectReward(){
     checkedStand = radioId;
     selectionSection.style.display = "block";
     displaySelection(stands, radioId);
- //   document.querySelector(`.selection__${radioId}`).classList.add("active");
-    //document.getElementById(radioId).checked = "checked";
-    //document.querySelector(`.${radioId}`).style.display = "flex";
-    //document.querySelector(`.selection__radio-1`).scrollIntoView({behavior: 'smooth', block: 'start'});
-
 }
 
 function handleCheckRadio(){
     document.querySelector(`.selection__${checkedStand}`).classList.remove("active");
     document.querySelector(`.${checkedStand}`).style.display = "none";
     checkedStand = this.id;
-    console.log(checkedStand);
     document.querySelector(`.selection__${checkedStand}`).classList.add("active");
     document.querySelector(`.${checkedStand}`).style.display = "flex";
 }
 
-function handleContinue(){
-    console.log("continue")
+function updateProjectStatistic(stand){
+    stand.removeStand();
+    backerProject.amount +=  document.querySelector(".input-" + stand.id).value*1;
+    backerProject.backers ++;
+    displayStatus(backerProject)
+}
+
+function updateNoRewordStatistic(){
+    backerProject.amount += document.querySelector(".input-0").value*1;
+    displayStatus(backerProject)
+}
+
+function handleContinuePledge(){
     switch(checkedStand){
-        case "radio-1": stands[0].removeStand();
+        case "radio-1": updateProjectStatistic(stands[0]);
         break;
-        case "radio-2": stands[1].removeStand();
+        case "radio-2": updateProjectStatistic(stands[1]);;
         break;
-        case "radio-3": stands[2].removeStand();
+        case "radio-3": updateProjectStatistic(stands[2]);;
         break;
-        default:
+        default:        updateNoRewordStatistic();
         break; 
     }
     document.querySelector(`.selection__${checkedStand}`).classList.remove("active");
@@ -186,21 +211,6 @@ function handleClose(section){
     section.style.display = "none";
 }
 displayStands(stands);
+displayStatus(backerProject);
 /** End Slider Range */
 
-
-/*class Stock{
-    constructor(pcs, title, description, price){
-        this.stock = this.addStock(pcs, title, description, price);    
-    }
-     addStock(pcs, title, description, price){
-         let stands = []
-        for(let i = 0; i < pcs; i++) {
-            stands.push(new Stand( title, description, price));
-        }
-        return stands;
-    }
-    removeStand(){
-           this.stock.pop();
-    }
-}*/
