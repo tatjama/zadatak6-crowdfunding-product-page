@@ -24,18 +24,20 @@ const toggleMenu = () => {
 hamburgerMenuButton.addEventListener("click",toggleMenu);
 /**End Hamburger Menu Button */
 
-/**Start Slider range */
+/**START  PROJECT */
+
+const root = document.querySelector(".root");
+const selectionRoot = document.querySelector(".selection__root");
+const statusRoot = document.querySelector(".status");
+const selectionSection = document.querySelector(".selection__wrapper");
+
 class Project{
     constructor(amount, backers, days){
         this.target = 100000;
         this.amount = amount;
         this.backers = backers;
         this.days = days;
- //       this.percentage = this.countPercentage();
     }
-   /* countPercentage(){ 
-        return this.amount / this.target * 100 ;
-    }*/
 }
 class Stand{
     constructor(id, title, description, price, quantity){
@@ -62,6 +64,8 @@ thank you. You’ll be added to our Backer member list. Shipping is included.`, 
 
 const stands = [bambooStand, blackEditionStand, mahoganySpecialEditionStand];
 
+// Rendering
+
 const displayStatus = (project) => {
     statusRoot.innerHTML = `
     <div class="status__statistic">              
@@ -82,8 +86,6 @@ const displayStatus = (project) => {
         <input class="status__slider"  type="range" name="status" />      
     </div>
     `
-    console.log(project.amount / project.target * 100 + "%")
-    //const rangeSlider = document.querySelector("input[type=range]");
     const rangeSlider = document.querySelector(".status__slider");
     rangeSlider.style.width = project.amount / project.target * 100 + "%";
 }
@@ -110,8 +112,7 @@ const displayStands = (stands) => {
             }    
     )   
     const standButtons = document.querySelectorAll(".about__btn");
-    standButtons.forEach((el) =>{el.addEventListener('click', handleSelectReward)} );
- 
+    standButtons.forEach((el) =>{el.addEventListener('click', handleSelectReward)} ); 
 }
 
 const displaySelection = (stands, radioId) => {    
@@ -153,13 +154,8 @@ const displaySelection = (stands, radioId) => {
     continueButtons.forEach((el) =>el.addEventListener('click', handleContinuePledge));
     const closeButton = document.querySelector(".selection__close");
     closeButton.addEventListener('click',()=> handleClose(selectionSection));
-
 }
 
-const root = document.querySelector(".root");
-const selectionRoot = document.querySelector(".selection__root");
-const statusRoot = document.querySelector(".status");
-const selectionSection = document.querySelector(".selection__wrapper");
 const successSection = document.querySelector(".success__wrapper");
 const successButton = document.querySelector(".success__btn");
 successButton.addEventListener('click', () => handleClose(successSection) );
@@ -190,18 +186,6 @@ function handleCheckRadio(){
     document.querySelector(`.${checkedStand}`).style.display = "flex";
 }
 
-function updateProjectStatistic(stand){
-    stand.removeStand();
-    backerProject.amount +=  document.querySelector(".input-" + stand.id).value*1;
-    backerProject.backers ++;
-    displayStatus(backerProject)
-}
-
-function updateNoRewordStatistic(){
-    backerProject.amount += document.querySelector(".input-0").value*1;
-    displayStatus(backerProject)
-}
-
 function handleContinuePledge(){
     switch(checkedStand){
         case "radio-1": updateProjectStatistic(stands[0]);
@@ -218,13 +202,27 @@ function handleContinuePledge(){
     displayStands(stands);
     handleClose(selectionSection);
     successSection.style.display = "block";
-    successSection.scrollIntoView({behavior: "smooth", block: "start"});
+    //successSection.scrollIntoView({behavior: "smooth", block: "start"});
+    window.scrollTo(0, 130);
 }
 
 function handleClose(section){
     section.style.display = "none";
 }
+
+function updateProjectStatistic(stand){
+    stand.removeStand();
+    backerProject.amount +=  document.querySelector(".input-" + stand.id).value*1;
+    backerProject.backers ++;
+    displayStatus(backerProject)
+}
+
+function updateNoRewordStatistic(){
+    backerProject.amount += document.querySelector(".input-0").value*1;
+    displayStatus(backerProject)
+}
+
 displayStands(stands);
 displayStatus(backerProject);
-/** End Slider Range */
+/** END PROJECT */
 

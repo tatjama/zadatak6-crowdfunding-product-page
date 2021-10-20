@@ -70,9 +70,11 @@ button{
 }
 .nav__logo{
     color: var(--white);
+    z-index: 8;
 }
 .nav__menu{
     display: none;
+    z-index: 8;
 }
 .nav{
     width: 20%;
@@ -673,7 +675,7 @@ input[type=range]::-webkit-slider-thumb {
         top: -10px;
         margin: 10px auto;
         padding: 30px 23px;
-        z-index: 10;
+        z-index: 7;
         background-color: var(--black-transparent);
 }
     .nav__links{
@@ -743,7 +745,10 @@ input[type=range]::-webkit-slider-thumb {
     .selection__container{
         padding-left: 60px;
         padding-right: 10px;
-      }
+    }
+    .success{
+        margin: 165px auto;        
+    }
 }
 @media screen and (max-width:600px){
     .selection{
@@ -762,6 +767,11 @@ input[type=range]::-webkit-slider-thumb {
         left: 25px;
         top: 200px;
     }
+    .success{
+        width: 85%;
+        margin: 145px auto;
+        padding: 30px 20px;
+    }
 }
     @media screen and (max-width:500px){
         .selection__h3{
@@ -773,11 +783,7 @@ input[type=range]::-webkit-slider-thumb {
         .selection__footer p{
             margin-bottom: 20px;
         }
-        .success{
-            width: 85%;
-            margin: 145px auto;
-            padding: 30px 20px;
-        }
+        
     }
 @media screen and (max-width: 365px){
     .main__btns{
