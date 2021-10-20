@@ -206,7 +206,9 @@ button{
     -ms-border-radius:25px;
     -o-border-radius:25px;
 }
-
+.status__slider{
+    max-width: 100%;
+}
 input[type=range] {
     width: 80%;
     height: 16px;
@@ -674,9 +676,9 @@ input[type=range]::-webkit-slider-thumb {
         right: 0;
         top: -10px;
         margin: 10px auto;
-        padding: 30px 23px;
+        padding: 30px 20px;
         z-index: 7;
-        background-color: var(--black-transparent);
+        background-image: linear-gradient(rgba(0 ,0 , 0, 0.4), rgba(255, 255, 255, 0.6) 20%);
 }
     .nav__links{
         margin: 60px auto;
