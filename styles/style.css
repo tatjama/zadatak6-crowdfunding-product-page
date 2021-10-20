@@ -108,11 +108,11 @@ button{
 }
 .main__h1{    
     font-size: 1.8em;
-    line-height: 2.2em;    
-    margin-top: 15px;
+    padding: 20px;
 }
 .main__p{ 
     line-height: 24px;
+    padding: 10px 20px;
 }
 .main-header__img{
     margin-top: -28px;
@@ -702,7 +702,6 @@ input[type=range]::-webkit-slider-thumb {
     .nav__links a{      
         width: 100%;  
         color: var(--black);
-        font-weight: 700;
         padding: 20px;
     }
     .wrapper{
@@ -710,6 +709,9 @@ input[type=range]::-webkit-slider-thumb {
     }
     .main__btn--right{
         display: none;
+    }
+    .status{
+        padding: 20px;
     }
     .status__statistic{
         flex-direction: column;
@@ -732,6 +734,9 @@ input[type=range]::-webkit-slider-thumb {
     .about{
         padding: 28px;
     }
+    .about__item{
+        margin-bottom: 20px;
+    }
     .about__header{
         flex-direction: column;
         align-items: flex-start;
@@ -747,6 +752,9 @@ input[type=range]::-webkit-slider-thumb {
     .selection__container{
         padding-left: 60px;
         padding-right: 10px;
+    }
+    .selection__item{
+        margin-bottom: 20px;
     }
     .success{
         margin: 165px auto;        
