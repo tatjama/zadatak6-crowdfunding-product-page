@@ -30,6 +30,8 @@ const root = document.querySelector(".root");
 const selectionRoot = document.querySelector(".selection__root");
 const statusRoot = document.querySelector(".status");
 const selectionSection = document.querySelector(".selection__wrapper");
+const backProjectBtn = document.querySelector(".main__btn--left");
+backProjectBtn.addEventListener("click",handleSelectReward);
 
 class Project{
     constructor(amount, backers, days){
@@ -55,6 +57,8 @@ class Stand{
 //Initial Values:
 
 const backerProject = new Project(10000, 1000, 56);
+const noRewards = new Stand(0, 'Pledge with no reward', `Choose to support us without a reward if you simply believe in our project.
+As a backer, you will be signed up to receive product updates via email.`, 1, 100000)
 const bambooStand =  new Stand(1, 'Bamboo Stand', `You get an ergonomic stand made of natural bamboo. You've helped us launch our
 promotional campaign, and you’ll be added to a special Backer member list.`, 25, 101);
 const blackEditionStand = new Stand(2, `Black Edition Stand `, `You get a Black Special Edition computer stand and a personal thank you. You’ll be
@@ -62,7 +66,7 @@ added to our Backer member list. Shipping is included.`, 75, 64);
 const mahoganySpecialEditionStand = new Stand(3, `Mahogany Special Edition`, `You get two Special Edition Mahogany stands, a Backer T-Shirt, and a personal 
 thank you. You’ll be added to our Backer member list. Shipping is included.`, 200, 1 )
 
-const stands = [bambooStand, blackEditionStand, mahoganySpecialEditionStand];
+const stands = [noRewards, bambooStand, blackEditionStand, mahoganySpecialEditionStand];
 
 // Rendering
 
@@ -93,7 +97,7 @@ const displayStatus = (project) => {
 const displayStands = (stands) => {    
         root.innerHTML = 
         stands.map((stand) => {
-                return `
+                return (stand.id !== 0)? `
                 <section class="about__item ${!stand.quantity && "out-stock"}">
                 <header class="about__header">
                 <h3>${stand.title}</h3>
@@ -108,7 +112,7 @@ const displayStands = (stands) => {
                 class= ${(stand.quantity == 0)? "about__btn--opac": "about__btn" } >${(stand.quantity == 0)? "Out of stock": "Select Reward"}</button>
                 </footer>
                 </section>
-                `
+                `: ""
             }    
     )   
     const standButtons = document.querySelectorAll(".about__btn");
@@ -124,8 +128,10 @@ const displaySelection = (stands, radioId) => {
                         <article class="selection__description">
                             <header class="selection__header">              
                                 <h3 class="selection__title">${stand.title} </h3>
-                                <span class="selection__span">Pledge ${stand.price} or more</span>
+                                ${(stand.price > 1)?
+                                `<span class="selection__span">Pledge ${stand.price} or more</span>
                                 <h3 class="selection__h3">${stand.quantity} <span class="selection__sup"> left</span></h3>
+                                `: ""}
                             </header>
                             <p class="selection__text">${stand.description}</p>   
                         </article>
@@ -144,10 +150,13 @@ const displaySelection = (stands, radioId) => {
                 </section>     
                 `
     })
-    document.querySelector(`.selection__${radioId}`).classList.add("active");
-    document.getElementById(radioId).checked = "checked";
-    document.querySelector(`.${radioId}`).style.display = "flex";
-    document.querySelector(`.selection__radio-1`).scrollIntoView({behavior: 'smooth', block: 'start'});
+    if(radioId){
+        document.querySelector(`.selection__${radioId}`).classList.add("active");
+        document.getElementById(radioId).checked = "checked";
+        document.querySelector(`.${radioId}`).style.display = "flex";
+        document.querySelector(`.selection__radio-1`).scrollIntoView({behavior: 'smooth', block: 'start'});
+    }
+    
     const checkButtons = document.querySelectorAll(".radio-btn");
     checkButtons.forEach((el) =>{el.addEventListener('click', handleCheckRadio)});
     const continueButtons = document.querySelectorAll(".selection__btn");
@@ -164,13 +173,15 @@ let checkedStand = "";
 function handleSelectReward(){
     let radioId;
     switch(this.id){
+        case "btn-0": radioId = "radio-0";
+        break;
         case "btn-1": radioId = "radio-1";
         break;
         case "btn-2": radioId = "radio-2";
         break;
         case "btn-3": radioId = "radio-3";
         break;
-        default : radioId = "radio-0";
+        default : radioId = "";
         break;         
     }
     checkedStand = radioId;
@@ -179,8 +190,10 @@ function handleSelectReward(){
 }
 
 function handleCheckRadio(){
-    document.querySelector(`.selection__${checkedStand}`).classList.remove("active");
-    document.querySelector(`.${checkedStand}`).style.display = "none";
+    if(checkedStand){
+        document.querySelector(`.selection__${checkedStand}`).classList.remove("active");
+        document.querySelector(`.${checkedStand}`).style.display = "none";
+    }    
     checkedStand = this.id;
     document.querySelector(`.selection__${checkedStand}`).classList.add("active");
     document.querySelector(`.${checkedStand}`).style.display = "flex";
@@ -188,13 +201,13 @@ function handleCheckRadio(){
 
 function handleContinuePledge(){
     switch(checkedStand){
-        case "radio-1": updateProjectStatistic(stands[0]);
+        case "radio-1": updateProjectStatistic(stands[1]);
         break;
-        case "radio-2": updateProjectStatistic(stands[1]);;
+        case "radio-2": updateProjectStatistic(stands[2]);;
         break;
-        case "radio-3": updateProjectStatistic(stands[2]);;
+        case "radio-3": updateProjectStatistic(stands[3]);;
         break;
-        default:        updateNoRewordStatistic();
+        default:        updateProjectStatistic(stands[0]);
         break; 
     }
     document.querySelector(`.selection__${checkedStand}`).classList.remove("active");
@@ -202,7 +215,6 @@ function handleContinuePledge(){
     displayStands(stands);
     handleClose(selectionSection);
     successSection.style.display = "block";
-    //successSection.scrollIntoView({behavior: "smooth", block: "start"});
     window.scrollTo(0, 130);
 }
 
@@ -214,11 +226,6 @@ function updateProjectStatistic(stand){
     stand.removeStand();
     backerProject.amount +=  document.querySelector(".input-" + stand.id).value*1;
     backerProject.backers ++;
-    displayStatus(backerProject)
-}
-
-function updateNoRewordStatistic(){
-    backerProject.amount += document.querySelector(".input-0").value*1;
     displayStatus(backerProject)
 }
 
