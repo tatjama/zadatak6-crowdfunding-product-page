@@ -139,14 +139,15 @@ const displaySelection = (stands, radioId) => {
                         <span class="radio-mark"></span>           
                     </label>
                     <footer class="selection__footer radio-${stand.id}">
-                        <p>Enter your pledge</p>
-                        <div>
+                        <p>Enter your pledge</p>                        
+                        <div>                            
                             <label class="selection__container--footer" for="price">$
                                 <input class="input-${stand.id} " type="number" min=${stand.price} name="price" value=${stand.price} >
                             </label>
                             <button class=" btn selection__btn">Continue</button>
                         </div>
                     </footer>
+                    <p class="error-message error-${stand.id}">Please enter $${stand.price} or more!</p>
                 </section>     
                 `
     })
@@ -201,15 +202,24 @@ function handleCheckRadio(){
 
 function handleContinuePledge(){
     switch(checkedStand){
-        case "radio-1": updateProjectStatistic(stands[1]);
+        case "radio-1": checkPledgeValidity(stands[1])
         break;
-        case "radio-2": updateProjectStatistic(stands[2]);;
+        case "radio-2": checkPledgeValidity(stands[2]);;
         break;
-        case "radio-3": updateProjectStatistic(stands[3]);;
+        case "radio-3": checkPledgeValidity(stands[3]);;
         break;
-        default:        updateProjectStatistic(stands[0]);
+        default:        checkPledgeValidity(stands[0]);
         break; 
-    }
+    }    
+}
+
+function checkPledgeValidity(stand){
+        (document.querySelector(".input-" + stand.id).value*1 >= stand.price)
+        ? updateProjectStatistic(stand)
+        : document.querySelector(".error-" + stand.id).style.display = "block";
+}
+
+function handleSuccessPledge(){
     document.querySelector(`.selection__${checkedStand}`).classList.remove("active");
     document.querySelector(`.${checkedStand}`).style.display = "none";    
     displayStands(stands);
@@ -222,11 +232,12 @@ function handleClose(section){
     section.style.display = "none";
 }
 
-function updateProjectStatistic(stand){
+function updateProjectStatistic(stand){    
     stand.removeStand();
     backerProject.amount +=  document.querySelector(".input-" + stand.id).value*1;
     backerProject.backers ++;
     displayStatus(backerProject)
+    handleSuccessPledge();
 }
 
 displayStands(stands);

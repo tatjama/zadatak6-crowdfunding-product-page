@@ -8,6 +8,7 @@
     --dark-gray: hsl(0, 0%, 48%);    
     --medium-gray: hsl(0, 0%, 76%);
     --light-gray: hsl(0, 0%, 95%);
+    --error-message: rgb(241, 12, 12);
 }
 *{
     margin: 0;
@@ -562,7 +563,13 @@ input[type=range]::-webkit-slider-thumb {
     font-size: 16px;
     font-weight: 500 ;
 }
-
+.error-message{
+    color: var(--error-message);
+    font-size: 14px;
+    margin-bottom: 20px;
+    text-align: center;
+    display: none;
+}
 /*Start Out of Stock style*/
 .selection__item.out-stock{
     opacity: 0.5;
